@@ -2,7 +2,6 @@ from tkinter import *  # imports Tkinter
 import os
 import subprocess
 
-#test
 # Create main window
 window = Tk()
 theme = "#00bbff"
