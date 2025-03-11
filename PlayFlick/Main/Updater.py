@@ -1,28 +1,63 @@
-import urllib.request
 import os
-import time
+import shutil
+import urllib.request
+import zipfile
+import sys
 
-# 🔹 Get the correct folder where both update.py and main.py are located
+# Get the path of the current script's directory (inside 'main')
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-MAIN_PY_PATH = os.path.join(BASE_DIR, "main.py")
+PROJECT_DIR = os.path.dirname(BASE_DIR)  # Playflick directory
 
-# 🔹 Replace with your raw GitHub URL
-GITHUB_URL = "https://raw.githubusercontent.com/sigge-robot/PlayFlick/refs/heads/main/New%20minigames/Main/Main.py"
+# Define the 'main' folder path in Playflick
+MAIN_DIR = os.path.join(PROJECT_DIR, "main")
 
-def update_main():
+# URL to the zipped main folder from GitHub (replace with your actual URL)
+GITHUB_ZIP_URL = "https://github.com/sigge-robot/PlayFlick/archive/refs/heads/main.zip"
+TEMP_ZIP = "main_update.zip"
+
+def update_main_folder():
     try:
-        print("Downloading new main.py...")
+        print("Checking for folder access...")
         
-        # Download the file and save it to the correct folder
-        urllib.request.urlretrieve(GITHUB_URL, MAIN_PY_PATH)
-        
-        print("Update successful! Restarting launcher...")
+        # Check if the user has permission to write to the folder
+        if not os.access(PROJECT_DIR, os.W_OK):
+            print(f"Error: You do not have permission to write to {PROJECT_DIR}. Please check folder permissions.")
+            sys.exit(1)
 
-        # (Optional) Restart main.py
-        time.sleep(1)
-        os.system(f"python \"{MAIN_PY_PATH}\"")
-    
+        print("Downloading the latest main folder from GitHub...")
+        
+        # Download the zip file of the main folder from GitHub
+        urllib.request.urlretrieve(GITHUB_ZIP_URL, TEMP_ZIP)
+        
+        print("Download complete. Extracting contents...")
+
+        # Extract the zip file to the parent directory (Playflick)
+        with zipfile.ZipFile(TEMP_ZIP, 'r') as zip_ref:
+            zip_ref.extractall(PROJECT_DIR)  # Extract into Playflick directory
+        
+        print("Extraction complete. Replacing old main folder...")
+
+        # Delete the old 'main' folder if it exists
+        if os.path.exists(MAIN_DIR):
+            print(f"Removing old main folder at: {MAIN_DIR}")
+            shutil.rmtree(MAIN_DIR)
+
+        # Move the newly extracted 'main' folder to the correct location
+        new_main_folder = os.path.join(PROJECT_DIR, "PlayFlick-main", "main")  # Adjust based on folder structure
+        if not os.path.exists(new_main_folder):
+            print("Error: New 'main' folder not found after extraction.")
+            sys.exit(1)
+
+        shutil.move(new_main_folder, MAIN_DIR)
+
+        # Clean up the temporary files
+        os.remove(TEMP_ZIP)
+        shutil.rmtree(os.path.join(PROJECT_DIR, "PlayFlick-main"))
+
+        print("Update complete! The 'main' folder has been successfully replaced.")
+
     except Exception as e:
-        print("Error updating:", e)
+        print("Error during update:", e)
 
-update_main()
+# Run the update process
+update_main_folder()
