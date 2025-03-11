@@ -1,6 +1,7 @@
 from tkinter import *  # imports Tkinter
 import os
 import subprocess
+import sys
 
 # Create main window
 window = Tk()
@@ -11,13 +12,15 @@ window.title("Main Menu")
 window.config(background=theme)
 window.resizable(False, False)
 
+#makes the lable
 titleLabel = Label(
     window,
     text="PlayFlick",
     font=('Arial', 40, 'bold'),
     bg=theme
 )
-titleLabel.pack(pady=10)  # Pack the label correctly
+titleLabel.pack(pady=10)  # Places the lable
+
 
 # Get the current script's directory
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -39,6 +42,7 @@ def create_buttons():
         print(f"Error: Folder '{SCRIPT_FOLDER}' not found.")
         return
     
+    
     py_files = [f for f in os.listdir(SCRIPT_FOLDER) if f.endswith(".py")]
 
     if not py_files:
@@ -49,8 +53,33 @@ def create_buttons():
         button = Button(window, text=filename, command=lambda f=filename: run_script(f))
         button.pack(pady=5)
 
+def restartMain():
+    """Restarts the main script"""
+
+    print("Restarting Main.py...") 
+
+    # Get the current script's filename
+    script_name = sys.argv[0]
+
+    #opens a new script
+    subprocess.Popen([sys.executable, script_name])
+
+    #closes the current script
+    sys.exit()
+
 # Generate buttons for Python scripts
 create_buttons()
+
+
+#makes the reload button
+reloadGames = Button(
+    window,
+    text="Reload games",
+    command=restartMain,
+)
+
+#Places the reload button
+reloadGames.pack(pady= 30)
 
 # Start the main loop
 window.mainloop()
