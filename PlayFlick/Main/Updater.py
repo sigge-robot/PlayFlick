@@ -4,18 +4,20 @@ import urllib.request
 import zipfile
 import sys
 
-# Get the path of the current script's directory (inside 'main')
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-PROJECT_DIR = os.path.dirname(BASE_DIR)  # Playflick directory
-
-# Define the 'main' folder path in Playflick
-MAIN_DIR = os.path.join(PROJECT_DIR, "main")
-
-# URL to the zipped main folder from GitHub (replace with your actual URL)
-GITHUB_ZIP_URL = "https://github.com/sigge-robot/PlayFlick/archive/refs/heads/main.zip"
-TEMP_ZIP = "main_update.zip"
 
 def update_main_folder():
+
+    
+    # Get the path of the current script's directory (inside 'main')
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    PROJECT_DIR = os.path.dirname(BASE_DIR)  # Playflick directory
+
+    # Define the 'main' folder path in Playflick
+    MAIN_DIR = os.path.join(PROJECT_DIR, "main")
+
+    # URL to the zipped main folder from GitHub (replace with your actual URL)
+    GITHUB_ZIP_URL = "https://github.com/sigge-robot/PlayFlick/archive/refs/heads/main.zip"
+    TEMP_ZIP = "main_update.zip"
     try:
         print("Checking for folder access...")
         
@@ -59,5 +61,3 @@ def update_main_folder():
     except Exception as e:
         print("Error during update:", e)
 
-# Run the update process
-update_main_folder()
