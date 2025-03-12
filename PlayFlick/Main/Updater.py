@@ -3,21 +3,29 @@ import shutil
 import urllib.request
 import zipfile
 import sys
+        
+
+# The path to the version.txt in github        
+GITHUB_VERSION_URL = "https://raw.githubusercontent.com/sigge-robot/PlayFlick/refs/heads/main/PlayFlick/Main/version.txt"
+
+#The local version file
+LOCAL_VERSION_FILE = os.path.join(os.path.dirname(__file__), "version.txt")
+
+
+# Get the path of the current script's directory (inside 'main')
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_DIR = os.path.dirname(BASE_DIR)  # Playflick directory
+
+# Define the 'main' folder path in Playflick
+MAIN_DIR = os.path.join(PROJECT_DIR, "main")
+
+# URL to the zipped main folder from GitHub 
+GITHUB_ZIP_URL = "https://github.com/sigge-robot/PlayFlick/archive/refs/heads/main.zip"
+TEMP_ZIP = "main_update.zip"
 
 
 def update_main_folder():
 
-    
-    # Get the path of the current script's directory (inside 'main')
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    PROJECT_DIR = os.path.dirname(BASE_DIR)  # Playflick directory
-
-    # Define the 'main' folder path in Playflick
-    MAIN_DIR = os.path.join(PROJECT_DIR, "main")
-
-    # URL to the zipped main folder from GitHub (replace with your actual URL)
-    GITHUB_ZIP_URL = "https://github.com/sigge-robot/PlayFlick/archive/refs/heads/main.zip"
-    TEMP_ZIP = "main_update.zip"
     try:
         print("Checking for folder access...")
         
@@ -61,3 +69,28 @@ def update_main_folder():
     except Exception as e:
         print("Error during update:", e)
 
+
+
+def get_local_version():
+    """Reads the local version file """
+
+    if os.path.exists(LOCAL_VERSION_FILE):
+        with open(LOCAL_VERSION_FILE, "r") as f:
+            return f.read().strip()
+    return "0"
+
+
+def get_latest_version():
+    """Gets the version file from GitHub"""
+
+    try:
+        response = urllib.request.urlopen(GITHUB_VERSION_URL)
+        return response.read().decode().strip()
+    except:
+        return "0"
+
+
+
+def check_for_updates():
+    """Returns True if an update is available."""
+    return get_latest_version() > get_local_version()
