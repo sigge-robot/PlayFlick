@@ -1,7 +1,10 @@
 from tkinter import *  # imports Tkinter
 import os
 import subprocess
+import urllib.request
+import zipfile
 import sys
+import Updater
 
 # Create main window
 window = Tk()
@@ -78,8 +81,19 @@ reloadGames = Button(
     command=restartMain,
 )
 
+#makes the Update/Repair button
+UpdateRepair = Button(
+    window,
+    text="Update/Repair",
+    #command=lambda: (Updater.update_main_folder(), restartMain()),
+)
+
+
 #Places the reload button
 reloadGames.pack(pady= 30)
+
+#Places the Update/Repair button
+UpdateRepair.pack()
 
 # Start the main loop
 window.mainloop()
