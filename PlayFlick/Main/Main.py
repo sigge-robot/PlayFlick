@@ -127,7 +127,7 @@ try:
     UpdateRepair = Button(
         window,
         text="Update/Repair",
-        #command=lambda: (Updater.update_main_folder(), restartMain()),
+        command=lambda: (Updater.update_main_folder(), restartMain()),
     )
 
     #makes the Settings button
