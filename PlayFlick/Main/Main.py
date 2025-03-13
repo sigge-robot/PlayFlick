@@ -79,6 +79,14 @@ try:
 
         settingsLabel.pack(pady= 10)
 
+        #makes the Update/Repair button
+        UpdateRepair = Button(
+            settingsWindow,
+            text="Update/Repair",
+            command=lambda: (Updater.update_main_folder(), restartMain()),
+        )
+
+        UpdateRepair.pack(pady=10)
 
     # Get the current script's directory
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -123,12 +131,6 @@ try:
         command=restartMain,
     )
 
-    #makes the Update/Repair button
-    UpdateRepair = Button(
-        window,
-        text="Update/Repair",
-        command=lambda: (Updater.update_main_folder(), restartMain()),
-    )
 
     #makes the Settings button
     SettingsButton = Button(
@@ -141,9 +143,6 @@ try:
 
     #Places the reload button
     reloadGames.pack(pady= 10)
-
-    #Places the Update/Repair button
-    UpdateRepair.pack(pady= 10)
 
     #Places the Settings button
     SettingsButton.pack(pady= 10)
