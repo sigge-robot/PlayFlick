@@ -62,6 +62,23 @@ try:
     )
     titleLabel.pack(pady=10)  # Places the lable
 
+    def openSettingsWindow():
+        settingsWindow = Toplevel()  
+        settingsWindow.geometry("500x700")
+        settingsWindow.title("Settings")
+        settingsWindow.config(background=theme)
+        settingsWindow.resizable(False, False)
+
+            #makes the lable
+        settingsLabel = Label(
+            settingsWindow,
+            text="Settings",
+            font=('Arial', 40, 'bold'),
+            bg=theme
+        )
+
+        settingsLabel.pack(pady= 10)
+
 
     # Get the current script's directory
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -113,12 +130,23 @@ try:
         #command=lambda: (Updater.update_main_folder(), restartMain()),
     )
 
+    #makes the Settings button
+    SettingsButton = Button(
+        window,
+        text="Settings",
+        command= openSettingsWindow
+    )
+
+
 
     #Places the reload button
-    reloadGames.pack(pady= 30)
+    reloadGames.pack(pady= 10)
 
     #Places the Update/Repair button
-    UpdateRepair.pack()
+    UpdateRepair.pack(pady= 10)
+
+    #Places the Settings button
+    SettingsButton.pack(pady= 10)
 
     # Start the main loop
     window.mainloop()
