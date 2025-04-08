@@ -44,6 +44,9 @@ auto_update()
 
 try:
 
+    # Get the current script's directory
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
     # Create main window
     window = Tk()
     theme = "#00bbff"
@@ -52,6 +55,11 @@ try:
     window.title("Main Menu")
     window.config(background=theme)
     window.resizable(False, False)
+
+    #Sets the icon
+    icon_path = os.path.join(BASE_DIR, "Icon.ico")
+    window.iconbitmap(icon_path)
+    
 
     #makes the lable
     titleLabel = Label(
