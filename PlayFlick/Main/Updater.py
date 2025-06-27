@@ -17,7 +17,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_DIR = os.path.dirname(BASE_DIR)  # Playflick directory
 
 # Define the 'main' folder path in Playflick
-MAIN_DIR = os.path.join(PROJECT_DIR, "main")
+MAIN_DIR = os.path.join(PROJECT_DIR, "Main")
 
 # URL to the zipped main folder from GitHub 
 GITHUB_ZIP_URL = "https://github.com/sigge-robot/PlayFlick/archive/refs/heads/main.zip"
