@@ -53,7 +53,7 @@ def update_main_folder():
             shutil.rmtree(MAIN_DIR)
 
         # Move the newly extracted 'main' folder to the correct location
-        new_main_folder = os.path.join(PROJECT_DIR, "PlayFlick-main", "PlayFlick", "main")  # Adjust based on folder structure
+        new_main_folder = os.path.join(PROJECT_DIR, "PlayFlick-main", "PlayFlick", "Main")  # Adjust based on folder structure
         if not os.path.exists(new_main_folder):
             print("Error: New 'main' folder not found after extraction.")
             sys.exit(1)
